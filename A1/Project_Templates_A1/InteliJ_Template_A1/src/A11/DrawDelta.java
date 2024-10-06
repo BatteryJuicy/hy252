@@ -12,8 +12,21 @@ import java.io.PrintWriter;
 
 public class DrawDelta {
 
-    static void inputCheck(String[] consoleArguments)
-    {
+    public static void main(String[] args) {
+        // Main method to handle input parameters and call appropriate methods based on mode (M)
+        inputCheck(args);
+
+        String M = args[0];
+        int L = Integer.parseInt(args[1]);
+
+        if (M.equals("c"))
+        {
+            consoleOut(L);
+        }
+
+    }
+
+    static void inputCheck(String[] consoleArguments) {
         String M;
         int L;
         try{
@@ -30,9 +43,19 @@ public class DrawDelta {
             return;
         }
     }
-    public static void main(String[] args) {
-        // Main method to handle input parameters and call appropriate methods based on mode (M)
-        inputCheck(args);
 
+    static void consoleOut(int L)
+    {
+        System.out.print(new String(new char[L-1]).replace("\0", " "));
+        System.out.println("*");
+
+        for (int i = 2; i < L; i++)
+        {
+            System.out.print(new String(new char[L-i]).replace("\0", " "));
+            System.out.print("*");
+            System.out.print(new String(new char[2*i-3]).replace("\0", " "));
+            System.out.println("*");
+        }
+        System.out.println(new String(new char[2*L-1]).replace("\0", "*")); //https://stackoverflow.com/questions/1235179/simple-way-to-repeat-a-string
     }
 }
