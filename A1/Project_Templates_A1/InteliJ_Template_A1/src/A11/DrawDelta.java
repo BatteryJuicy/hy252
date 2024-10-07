@@ -26,7 +26,6 @@ public class DrawDelta {
             case "f" -> writeOnFile(pyramid);
             case "g" -> guiWindow();
         }
-
     }
 
     static void inputCheck(){
@@ -83,7 +82,7 @@ public class DrawDelta {
 
     static void windowOut(String stringOut)
     {
-        UIManager.put("OptionPane.messageFont", new Font("Lucida Console", Font.BOLD, 14));
+        UIManager.put("OptionPane.messageFont", new Font(Font.MONOSPACED, Font.BOLD, 14));
         JOptionPane.showMessageDialog(null, stringOut,"Παράθυρο Εξόδου", JOptionPane.INFORMATION_MESSAGE);
 
     }
@@ -95,7 +94,6 @@ public class DrawDelta {
             writer = new PrintWriter("./D.html", "UTF-8");
             writer.print("<!DOCTYPE html><html><head><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\"/></head><body><pre>");
             writer.print(stringOut.replace("\n", "<br>"));
-            System.out.println(stringOut.replace("\n", "<br>"));
             writer.print("</pre></body></html>"); //the <pre></pre> is from chatgpt.
             writer.close();
         } catch (Exception e) {
