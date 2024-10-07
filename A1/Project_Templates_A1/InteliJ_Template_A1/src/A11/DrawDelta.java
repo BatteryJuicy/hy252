@@ -11,27 +11,30 @@ import java.awt.geom.Line2D;
 import java.io.PrintWriter;
 
 public class DrawDelta {
+    public static String M;
+    public static int L;
 
     public static void main(String[] args) {
         // Main method to handle input parameters and call appropriate methods based on mode (M)
-        inputCheck(args);
+        inputCheck();
+        String pyramid = createPyramid();
 
-        String M = args[0];
-        int L = Integer.parseInt(args[1]);
-
-        if (M.equals("c"))
-        {
-            consoleOut(L);
+        switch (M) {
+            case "c" -> System.out.println(pyramid);
+            case "w" -> windowOut(pyramid);
+            case "f" -> writeOnFile(pyramid);
+            case "g" -> guiWindow(pyramid);
         }
 
     }
 
-    static void inputCheck(String[] consoleArguments) {
-        String M;
-        int L;
+    static void inputCheck(){
         try{
-            M = consoleArguments[0];
-            L = Integer.parseInt(consoleArguments[1]);
+            Scanner in = new Scanner(System.in);
+            M = in.nextLine();
+            //System.out.println("M: " + M);
+            L = in.nextInt();
+            //System.out.println("L: " + L);
 
             if (!(M.equals("c") || M.equals("w") || M.equals("f") || M.equals("g"))) {throw new Exception();}
             if (L < 3 || L > 20) {throw new Exception();}
@@ -40,22 +43,67 @@ public class DrawDelta {
         catch(Exception e){
 
             System.out.println("Error. Please provide the correct inputs.");
-            return;
         }
     }
 
-    static void consoleOut(int L)
+    static String createPyramid()
     {
-        System.out.print(new String(new char[L-1]).replace("\0", " "));
-        System.out.println("*");
+        StringBuilder result;
+
+        result = new StringBuilder(new String(new char[L - 1]).replace("\0", " "));
+        result.append("*\n");
 
         for (int i = 2; i < L; i++)
         {
-            System.out.print(new String(new char[L-i]).replace("\0", " "));
-            System.out.print("*");
-            System.out.print(new String(new char[2*i-3]).replace("\0", " "));
-            System.out.println("*");
+            result.append(new String(new char[L - i]).replace("\0", " "));
+            result.append("*");
+            result.append(new String(new char[2 * i - 3]).replace("\0", " "));
+            result.append("*\n");
         }
-        System.out.println(new String(new char[2*L-1]).replace("\0", "*")); //https://stackoverflow.com/questions/1235179/simple-way-to-repeat-a-string
+        result.append(new String(new char[2 * L - 1]).replace("\0", "*"));
+
+        return result.toString();
+    }
+
+//    static void consoleOut()
+//    {
+//        System.out.print(new String(new char[L-1]).replace("\0", " "));
+//        System.out.println("*");
+//
+//        for (int i = 2; i < L; i++)
+//        {
+//            System.out.print(new String(new char[L-i]).replace("\0", " "));
+//            System.out.print("*");
+//            System.out.print(new String(new char[2*i-3]).replace("\0", " "));
+//            System.out.println("*");
+//        }
+//        System.out.println(new String(new char[2*L-1]).replace("\0", "*")); //https://stackoverflow.com/questions/1235179/simple-way-to-repeat-a-string
+//    }
+
+    static void windowOut(String stringOut)
+    {
+        UIManager.put("OptionPane.messageFont", new Font("Lucida Console", Font.BOLD, 14));
+        JOptionPane.showMessageDialog(null, stringOut,"ΠαράθυροΕξόδου", JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
+    static void writeOnFile(String stringOut)
+    {
+        PrintWriter writer;
+        try{
+            writer = new PrintWriter("./D.html", "UTF-8");
+            writer.print("<!DOCTYPE html><html><head><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\"/></head><body><pre>");
+            writer.print(stringOut.replace("\n", "<br>"));
+            System.out.println(stringOut.replace("\n", "<br>"));
+            writer.print("</pre></body></html>"); //the <pre></pre> is from chatgpt.
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Πρόβλημα: "+e);
+        }
+    }
+
+    static void guiWindow(String stringOut)
+    {
+
     }
 }
