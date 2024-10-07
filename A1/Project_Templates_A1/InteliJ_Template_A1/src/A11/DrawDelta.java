@@ -8,6 +8,7 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.QuadCurve2D;
 import java.io.PrintWriter;
 
 public class DrawDelta {
@@ -23,7 +24,7 @@ public class DrawDelta {
             case "c" -> System.out.println(pyramid);
             case "w" -> windowOut(pyramid);
             case "f" -> writeOnFile(pyramid);
-            case "g" -> guiWindow(pyramid);
+            case "g" -> guiWindow();
         }
 
     }
@@ -83,7 +84,7 @@ public class DrawDelta {
     static void windowOut(String stringOut)
     {
         UIManager.put("OptionPane.messageFont", new Font("Lucida Console", Font.BOLD, 14));
-        JOptionPane.showMessageDialog(null, stringOut,"ΠαράθυροΕξόδου", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, stringOut,"Παράθυρο Εξόδου", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -102,8 +103,19 @@ public class DrawDelta {
         }
     }
 
-    static void guiWindow(String stringOut)
+    static void guiWindow()
     {
-
+        Frame f = new Frame("ΖωγραφίζονταςτοΔ")
+        {
+            public void paint (Graphics g)
+            {
+                Graphics2D g2 = (Graphics2D) g;
+                g2.draw(new Line2D.Double(50,  300, 200, 50)); // a  line
+                g2.draw(new Line2D.Double(50,  300, 350, 300));
+                g2.draw(new Line2D.Double(200,  50, 350, 300));
+            }
+        };
+        f.setSize(400,400);
+        f.setVisible(true);
     }
 }
