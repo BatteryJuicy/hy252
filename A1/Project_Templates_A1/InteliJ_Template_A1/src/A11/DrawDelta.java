@@ -17,24 +17,42 @@ public class DrawDelta {
 
     public static void main(String[] args) {
         // Main method to handle input parameters and call appropriate methods based on mode (M)
-        inputCheck();
-        String pyramid = createPyramid();
+        inputCheck(true);
+        while(L>2 && L<21)
+        {
+            String pyramid = createPyramid();
+            switch (M) //(switch instead of if) intelij AI suggestion.
+            {
+                    case "c" -> {
+                        System.out.println(pyramid);
+                        inputCheck(false);
+                    }
+                case "w" -> {
+                    windowOut(pyramid);
+                }
+                case "f" -> {
+                    writeOnFile(pyramid);
+                    inputCheck(false);
+                }
+                case "g" -> {
+                    guiWindow();
+                    inputCheck(false);
+                }
+            }
 
-        switch (M) {
-            case "c" -> System.out.println(pyramid);
-            case "w" -> windowOut(pyramid);
-            case "f" -> writeOnFile(pyramid);
-            case "g" -> guiWindow();
         }
     }
 
-    static void inputCheck(){
+    static void inputCheck(boolean check_Mode){
         try{
             Scanner in = new Scanner(System.in);
-            M = in.nextLine();
+
+            if(check_Mode) {
+                M = in.nextLine();
+            }
             //System.out.println("M: " + M);
             L = in.nextInt();
-            //System.out.println("L: " + L);
+            System.out.println("L: " + L);
 
             if (!(M.equals("c") || M.equals("w") || M.equals("f") || M.equals("g"))) {throw new Exception();}
             if (L < 3 || L > 20) {throw new Exception();}
