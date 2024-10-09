@@ -1,0 +1,47 @@
+package lec5;
+
+class _switch {
+    private boolean isOn = false;
+    private float maxPower = 1;
+
+    void _switch(boolean isOn, float power)
+    {
+        this.isOn = isOn;
+        if(power < 0.0f)
+        {
+            throw new IllegalArgumentException();
+        }
+        this.maxPower = power;
+    }
+    private boolean isOne(){
+        return this.isOn;
+    }
+    private float getMaxPower()
+    {
+        return this.maxPower;
+    }
+}
+
+class dimmer extends switch
+{
+    private float level = 0f;
+
+    private void setLevel(float powerLevel)
+    {
+        if (powerLevel < 0.0f || powerLevel > 1.0f)
+        {
+            throw new IllegalArgumentException();
+        }
+        else{
+            this.level = powerLevel;
+        }
+    }
+}
+
+public class lec5_switch
+{
+    public static void main(String[] args)
+    {
+
+    }
+}
