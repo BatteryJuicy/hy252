@@ -21,7 +21,7 @@ public class DrawDelta {
         while(L>2 && L<21)
         {
             String pyramid = createPyramid();
-            switch (M) //(switch instead of if) intelij AI suggestion.
+            switch (M)
             {
                     case "c" -> {
                         System.out.println(pyramid);
@@ -29,6 +29,7 @@ public class DrawDelta {
                     }
                 case "w" -> {
                     windowOut(pyramid);
+                    inputCheck(false);
                 }
                 case "f" -> {
                     writeOnFile(pyramid);
@@ -50,9 +51,12 @@ public class DrawDelta {
             if(check_Mode) {
                 M = in.nextLine();
             }
-            //System.out.println("M: " + M);
-            L = in.nextInt();
-            System.out.println("L: " + L);
+            if (M.equals("w") && !check_Mode) {
+                L = Integer.parseInt(JOptionPane.showInputDialog("Enter size (2<L<21): ", 5));
+            }
+            else {
+                L = in.nextInt();
+            }
 
             if (!(M.equals("c") || M.equals("w") || M.equals("f") || M.equals("g"))) {throw new Exception();}
             if (L < 3 || L > 20) {throw new Exception();}
@@ -83,21 +87,6 @@ public class DrawDelta {
         return result.toString();
     }
 
-//    static void consoleOut()
-//    {
-//        System.out.print(new String(new char[L-1]).replace("\0", " "));
-//        System.out.println("*");
-//
-//        for (int i = 2; i < L; i++)
-//        {
-//            System.out.print(new String(new char[L-i]).replace("\0", " "));
-//            System.out.print("*");
-//            System.out.print(new String(new char[2*i-3]).replace("\0", " "));
-//            System.out.println("*");
-//        }
-//        System.out.println(new String(new char[2*L-1]).replace("\0", "*")); //https://stackoverflow.com/questions/1235179/simple-way-to-repeat-a-string
-//    }
-
     static void windowOut(String stringOut)
     {
         UIManager.put("OptionPane.messageFont", new Font(Font.MONOSPACED, Font.BOLD, 14));
@@ -112,7 +101,7 @@ public class DrawDelta {
             writer = new PrintWriter("./D.html", "UTF-8");
             writer.print("<!DOCTYPE html><html><head><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\"/></head><body><pre>");
             writer.print(stringOut.replace("\n", "<br>"));
-            writer.print("</pre></body></html>"); //the <pre></pre> is from chatgpt.
+            writer.print("</pre></body></html>");
             writer.close();
         } catch (Exception e) {
             System.out.println("Πρόβλημα: "+e);
