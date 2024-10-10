@@ -8,40 +8,34 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.QuadCurve2D;
 import java.io.PrintWriter;
 
 public class DrawDelta {
     public static String M;
     public static int L;
+    public static boolean isInRecursion = false;
 
     public static void main(String[] args) {
         // Main method to handle input parameters and call appropriate methods based on mode (M)
-        inputCheck(true);
+        if (!isInRecursion){inputCheck(true);}
+
         while(L>2 && L<21)
         {
             String pyramid = createPyramid();
             switch (M)
             {
-                    case "c" -> {
-                        System.out.println(pyramid);
-                        inputCheck(false);
-                    }
-                case "w" -> {
-                    windowOut(pyramid);
-                    inputCheck(false);
-                }
-                case "f" -> {
-                    writeOnFile(pyramid);
-                    inputCheck(false);
-                }
-                case "g" -> {
-                    guiWindow();
-                    inputCheck(false);
-                }
+                case "c" -> System.out.println(pyramid);
+                case "w" -> windowOut(pyramid);
+                case "f" -> writeOnFile(pyramid);
+                case "g" -> guiWindow();
             }
+            if (!isInRecursion) {inputCheck(false);}
 
+            L--;
+            isInRecursion = true;
+            main(args);
         }
+        isInRecursion = false;
     }
 
     static void inputCheck(boolean check_Mode){
