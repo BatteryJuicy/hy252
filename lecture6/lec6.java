@@ -2,7 +2,7 @@ package lec6;
 
 class Animal
 {
-    private String sound;
+    protected String sound;
     private int age;
     private int weight;
 
@@ -54,9 +54,9 @@ class Dog extends Animal
     {
         super(sound, age, weight);
     }
-    void bark(String sound)
+    void bark()
     {
-        System.out.println(sound + "nigga");
+        System.out.println(this.sound + " " + this.sound + " nigga");
     }
 }
 
@@ -70,6 +70,10 @@ public class lec6
         monkey.bark();
         monkey.bark();
         System.out.println(" I am " + monkey.getAge() + " and I weigh " + monkey.getWeight());
+
+        Dog doggy = new Dog("gav", 5, 40);
+
+        doggy.bark();
 
     }
 }
