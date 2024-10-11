@@ -11,14 +11,18 @@ import java.awt.geom.Line2D;
 import java.io.PrintWriter;
 
 public class DrawDelta {
-    public static String M;
-    public static int L;
-    public static boolean isInRecursion = false;
+    private static String M;
+    private static int L;
+
+    private static boolean isInRecursion = false;
 
     public static void main(String[] args) {
         // Main method to handle input parameters and call appropriate methods based on mode (M)
-        if (!isInRecursion){inputCheck(true);}
-
+        if (!isInRecursion)
+        {
+            inputCheck(L != 2);
+        }
+        isInRecursion = true;
         while(L>2 && L<21)
         {
             String pyramid = createPyramid();
@@ -32,9 +36,9 @@ public class DrawDelta {
             if (!isInRecursion) {inputCheck(false);}
 
             L--;
-            isInRecursion = true;
             main(args);
         }
+        if (L == 2 && !isInRecursion) {main(args);}
         isInRecursion = false;
     }
 
