@@ -14,10 +14,16 @@ public class Palindromikes {
         Scanner in = new Scanner(System.in);
         System.out.print("Enter a palindrome: ");
         String palindrome = in.nextLine();
-        System.out.println("\n" + isPalindromikiFrash(palindrome));
-
+        long timeI = System.currentTimeMillis();
+        System.out.println("\n" + PalindromikesFraseis.isPalindromikiFrash(palindrome));
+        long timeF = System.currentTimeMillis();
+        System.out.println((timeF - timeI)/1000.0);
     }
+}
 
+// Class for palindrome phrase functionality
+class PalindromikesFraseis {
+    // Method to check if the input string is a palindrome
     static boolean isPalindromikiFrash(String s)
     {
         s = Normalizer.normalize(s, Normalizer.Form.NFD);
@@ -46,11 +52,6 @@ public class Palindromikes {
         }
         return isPalindrome;
     }
-}
-
-// Class for palindrome phrase functionality
-class PalindromikesFraseis {
-    // Method to check if the input string is a palindrome
 }
 
 // Class for dictionary file processing
