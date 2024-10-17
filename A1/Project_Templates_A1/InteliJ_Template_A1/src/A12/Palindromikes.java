@@ -1,23 +1,40 @@
 package A12;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 public class Palindromikes {
     public static void main(String[] args)
     {
         // Main method to manage the selection and execution of different functionalities
-        Scanner in = new Scanner(System.in);
-        System.out.print("Enter a palindrome: ");
-        String palindrome = in.nextLine();
+        //a
+        try {
+            Scanner in = new Scanner(System.in);
+            System.out.print("Enter a palindrome: ");
+            String palindrome = in.nextLine();
+            if (palindrome.isEmpty()) {throw new IOException();}
+            else{
+                System.out.println("\n" + PalindromikesFraseis.isPalindromikiFrash(palindrome));
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            exit(1);
+        }
         long timeI = System.currentTimeMillis();
-        System.out.println("\n" + PalindromikesFraseis.isPalindromikiFrash(palindrome));
         long timeF = System.currentTimeMillis();
-        System.out.println((timeF - timeI)/1000.0);
+        System.out.println("RunTime in seconds: " +  (timeF - timeI)/1000.0);
+
+        //b
+        //PalindromikesLexikou lex = new PalindromikesLexikou();
+
     }
 }
 
@@ -57,6 +74,54 @@ class PalindromikesFraseis {
 // Class for dictionary file processing
 class PalindromikesLexikou {
     // Method to process the dictionary file
+    int wordCount = 0;
+    int letterCount = 0;
+    int palindromeCount = 0;
+    String palindromes[] = new String[575_000];
+
+    void updateData(String word)
+    {
+        if (PalindromikesFraseis.isPalindromikiFrash(word))
+        {
+            palindromeCount++;
+            palindromes[wordCount] = word;
+        }
+        wordCount++;
+        letterCount += word.length();
+    }
+
+    void scanDict()
+    {
+        try {
+            FileInputStream fis = new FileInputStream("./Resources/gr.dic");
+            Scanner sc = new Scanner(fis);
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                updateData(line);
+            }
+            sc.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+    }
+
+    void printData()
+    {
+        System.out.println("word count: " + wordCount);
+        System.out.println("average word length: " + (letterCount/wordCount));
+        System.out.println("palindrome count: " + palindromeCount);
+        for (int i = 0; i < palindromes.length; i++)
+        {
+            System.out.println(palindromes[i] + " ");
+            if(i%10 == 0)
+            {
+                System.out.println();
+            }
+        }
+        System.out.println();
+        System.out.println("palindrome percentage: " + palindromeCount * 100 / wordCount + "%");
+    }
 }
 
 // Class for converting palindromic words into music
