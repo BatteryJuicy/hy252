@@ -19,18 +19,19 @@ public class Palindromikes {
             Scanner in = new Scanner(System.in);
             System.out.print("Enter a palindrome: ");
             String palindrome = in.nextLine();
-            if (palindrome.isEmpty()) {throw new IOException();}
+            if (palindrome.isEmpty()) {throw new InvalidParameterException();}
             else{
+                long timeI = System.currentTimeMillis();
                 System.out.println("\n" + PalindromikesFraseis.isPalindromikiFrash(palindrome));
+                long timeF = System.currentTimeMillis();
+                System.out.println("RunTime in seconds: " +  (timeF - timeI)/1000.0)
+                ;
             }
         }
         catch (Exception e) {
             System.out.println(e);
             exit(1);
         }
-        long timeI = System.currentTimeMillis();
-        long timeF = System.currentTimeMillis();
-        System.out.println("RunTime in seconds: " +  (timeF - timeI)/1000.0);
 
         //b
         //PalindromikesLexikou lex = new PalindromikesLexikou();
