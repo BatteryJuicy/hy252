@@ -2,13 +2,13 @@ package A12;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.security.InvalidParameterException;
 import java.text.Normalizer;
-import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.regex.Pattern;
 import java.util.Scanner;
+import org.jfugue.Player;
 
 import static java.lang.System.exit;
 
@@ -30,11 +30,11 @@ public class Palindromikes {
             }
         }
         catch (Exception e) {
-            System.out.println(e);
             exit(1);
         }
 
         //b
+        //
         long timeI = System.currentTimeMillis();
         PalindromikesLexikou.scanDict();
         long timeF = System.currentTimeMillis();
@@ -42,6 +42,15 @@ public class Palindromikes {
         System.out.println("b execution time in seconds: " +  (timeF - timeI)/1000.0);
         PalindromikesLexikou.sort();
         PalindromikesLexikou.printPalindromes();
+
+        //c
+        int palindromeCount = PalindromikesLexikou.palindromeCount;
+        String[] palindromes = PalindromikesLexikou.palindromes;
+
+        for (int i = 0; i < palindromeCount; i++)
+        {
+            PalindromikesMusic.playWord(palindromes[i]);
+        }
     }
 }
 
@@ -111,8 +120,6 @@ abstract class PalindromikesLexikou {
                 updateData(line);
             }
             sc.close();
-            //palindromes = resizeArrray(palindromes);
-            //System.out.println(palindromes.length);
         }
         catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
@@ -141,17 +148,6 @@ abstract class PalindromikesLexikou {
         }
         System.out.println();
     }
-    static String[] resizeArrray(String[] list){
-        int realLength = 0;
-
-        while (list[realLength] != null) {
-            realLength++;
-        }
-
-        String[] result = new String[realLength];
-        System.arraycopy(list, 0, result, 0, realLength);
-        return result;
-    }
 
     static String[] mergesort(String[] list, int listLength) {
         if (listLength < 2) return list;
@@ -160,12 +156,11 @@ abstract class PalindromikesLexikou {
         String[] left = new String[mid];
         String[] right = new String[listLength - mid];
 
-        for (int i = 0; i < mid; i++) {
+        for (int i = 0; i < mid; i++)
             left[i] = list[i];
-        }
-        for (int i = 0; i < listLength - mid; i++) {
+
+        for (int i = 0; i < listLength - mid; i++)
             right[i] = list[i + mid];
-        }
 
         mergesort(left, mid);
         mergesort(right, listLength - mid);
@@ -202,4 +197,16 @@ abstract class PalindromikesLexikou {
 // Class for converting palindromic words into music
 class PalindromikesMusic {
     // Method to play music for palindromic words
+    static void playWord(String word)
+    {
+        Player player = new Player();
+
+        int wordLength = word.length();
+        char[] w = word.toCharArray();
+
+        for (int i = 0; i < wordLength; i++){
+            String note = "[" + ((int)(w[i])-885) + "]i";
+            player.play(note);
+        }
+    }
 }
