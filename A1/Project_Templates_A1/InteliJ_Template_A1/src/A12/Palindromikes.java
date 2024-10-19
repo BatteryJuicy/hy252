@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.security.InvalidParameterException;
 import java.text.Normalizer;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.regex.Pattern;
 import java.util.Scanner;
 import org.jfugue.Player;
