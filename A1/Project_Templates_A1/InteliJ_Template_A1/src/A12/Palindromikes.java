@@ -147,8 +147,8 @@ abstract class PalindromikesLexikou {
         System.out.println();
     }
 
-    static String[] mergesort(String[] list, int listLength) {
-        if (listLength < 2) return list;
+    static void mergesort(String[] list, int listLength) {
+        if (listLength < 2) return;
 
         int mid = listLength / 2;
         String[] left = new String[mid];
@@ -184,11 +184,10 @@ abstract class PalindromikesLexikou {
             j++;
             k++;
         }
-        return list;
     }
 
     static void sort(){
-        palindromes = mergesort(palindromes, 69);
+        mergesort(palindromes, palindromeCount);
     }
 }
 
