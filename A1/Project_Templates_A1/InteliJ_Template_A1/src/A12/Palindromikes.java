@@ -40,7 +40,7 @@ public class Palindromikes {
         long timeF = System.currentTimeMillis();
         PalindromikesLexikou.printData();
         System.out.println("b execution time in seconds: " +  (timeF - timeI)/1000.0);
-        PalindromikesLexikou.mergesort(PalindromikesLexikou.palindromes);
+        PalindromikesLexikou.sort();
         PalindromikesLexikou.printPalindromes();
     }
 }
@@ -111,8 +111,8 @@ abstract class PalindromikesLexikou {
                 updateData(line);
             }
             sc.close();
-            palindromes = resizeArrray(palindromes);
-            System.out.println(palindromes.length);
+            //palindromes = resizeArrray(palindromes);
+            //System.out.println(palindromes.length);
         }
         catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
@@ -134,11 +134,12 @@ abstract class PalindromikesLexikou {
         {
             if (palindromes[i] != null) {
                 System.out.print(palindromes[i] + " ");
-                if (i % 10 == 0) {
+                if ((i+1) % 10 == 0) {
                     System.out.println();
                 }
             }
         }
+        System.out.println();
     }
     static String[] resizeArrray(String[] list){
         int realLength = 0;
@@ -151,35 +152,41 @@ abstract class PalindromikesLexikou {
         System.arraycopy(list, 0, result, 0, realLength);
         return result;
     }
-    static String[] mergesort(String[] list)
-    {
-        if (list.length < 2)return list;
 
-        int mid = list.length / 2;
-        String[] left = cutArray(list, true);
-        String[] right = cutArray(list,false);
+    static String[] mergesort(String[] list, int listLength) {
+        if (listLength < 2) return list;
 
-        mergesort(left);
-        mergesort(right);
+        int mid = listLength / 2;
+        String[] left = new String[mid];
+        String[] right = new String[listLength - mid];
+
+        for (int i = 0; i < mid; i++) {
+            left[i] = list[i];
+        }
+        for (int i = 0; i < listLength - mid; i++) {
+            right[i] = list[i + mid];
+        }
+
+        mergesort(left, mid);
+        mergesort(right, listLength - mid);
+
         int i = 0, j = 0, k = 0;
-
-        while (i < left.length && j < right.length){
-            if (left[i].length() > right[j].length()){
+        while (i < left.length && j < right.length) {
+            if (left[i].length() > right[j].length()) {
                 list[k] = left[i];
                 i++;
-            }
-            else{
+            } else {
                 list[k] = right[j];
                 j++;
             }
             k++;
         }
-        while (i < left.length){
+        while (i < left.length) {
             list[k] = left[i];
             i++;
             k++;
         }
-        while (j < right.length){
+        while (j < right.length) {
             list[k] = right[j];
             j++;
             k++;
@@ -187,20 +194,8 @@ abstract class PalindromikesLexikou {
         return list;
     }
 
-    static String[] cutArray(String[] list, boolean leftHalf)
-    {
-        String[] result = new String[list.length/2];
-        if(leftHalf) {
-            for (int i = 0; i < list.length / 2; i++) {
-                result[i] = list[i];
-            }
-        }
-        else{
-            for (int i = list.length / 2; i < list.length; i++) {
-                result[i] = list[i];
-            }
-        }
-        return result;
+    static void sort(){
+        palindromes = mergesort(palindromes, 69);
     }
 }
 
