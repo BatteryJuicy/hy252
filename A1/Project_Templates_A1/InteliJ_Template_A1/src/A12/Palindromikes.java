@@ -16,11 +16,15 @@ public class Palindromikes {
         // Main method to manage the selection and execution of different functionalities
         //a
         try {
+            //readig palidrome.
             Scanner in = new Scanner(System.in);
             System.out.print("Enter a palindrome: ");
             String palindrome = in.nextLine();
+
+            //throwig an exception if the provided string is empty.
             if (palindrome.isEmpty()) {throw new InvalidParameterException();}
             else{
+                //timig and executing the function to check if the string is a palindrome.
                 long timeI = System.currentTimeMillis();
                 System.out.println("\n" + PalindromikesFraseis.isPalindromikiFrash(palindrome));
                 long timeF = System.currentTimeMillis();
@@ -32,12 +36,18 @@ public class Palindromikes {
         }
 
         //b
-        //
+
+        //timing and executing the function that reads the input file, updates the necessary variables,
+        // formats each string and checks if it's a palindrome.
         long timeI = System.currentTimeMillis();
         PalindromikesLexikou.scanDict();
         long timeF = System.currentTimeMillis();
+
+        //printing the palindromes that were found and the execution time.
         PalindromikesLexikou.printData();
         System.out.println("b execution time in seconds: " +  (timeF - timeI)/1000.0);
+
+        //sorting the palindrome array with merge sort and printing the result.
         PalindromikesLexikou.sort();
         PalindromikesLexikou.printPalindromes();
 
@@ -57,23 +67,32 @@ abstract class PalindromikesFraseis {
     // Method to check if the input string is a palindrome
     static boolean isPalindromikiFrash(String s)
     {
+        //converting the accents into characters.
         s = Normalizer.normalize(s, Normalizer.Form.NFD);
-        //System.out.println("string after normalize: " + s);
-        s = Pattern.compile("\\p{M}").matcher(s).replaceAll("");
-        //System.out.println("string after replacing accents: " + s);
-        s = s.replaceAll("[^\\p{L}]", "");
-        //System.out.println("string after removing special characters: " + s);
-        s = s.toLowerCase();
-        //System.out.println("string after replacing to lowercase: " + s);
 
+        //replacing the accent characters with an empty string.
+        s = Pattern.compile("\\p{M}").matcher(s).replaceAll("");
+
+        //replacing any non-alphabetical character with the empty string.
+        s = s.replaceAll("[^\\p{L}]", "");
+
+        //converting everything to lowercase to compare later.
+        s = s.toLowerCase();
+
+        //a char array of the word string.
         char[] normal = s.toCharArray();
+
+        //a char array that wll have the word in reverse.
         char[] reverse = new char[s.length()];
+
         boolean isPalindrome = true;
 
+        //if the word didn't have any alphabetical character (i.e. it was all special characters and numbers).
         if (s.isEmpty()) {
             return false;
         }
 
+        //passing the reverse of the word into the reverse array and checking if the two arrays are the same.
         for (int i = s.length() - 1; i >= 0; i--)
         {
             reverse[s.length() - 1 - i] = normal[i];
@@ -97,6 +116,7 @@ abstract class PalindromikesLexikou {
     static int palindromeCount = 0;
     static public String[] palindromes = new String[575_000];
 
+    //updates the appropriate above variable for each word passed.
     static private void updateData(String word)
     {
         if (PalindromikesFraseis.isPalindromikiFrash(word))
@@ -108,6 +128,7 @@ abstract class PalindromikesLexikou {
         letterCount += word.length();
     }
 
+    //reads the input file checks for errors and calls updateData().
     static void scanDict()
     {
         try {
@@ -124,6 +145,7 @@ abstract class PalindromikesLexikou {
         }
     }
 
+    //prints most of the variables the assignment asks for.
     static void printData()
     {
         System.out.println("word count: " + wordCount);
@@ -133,6 +155,7 @@ abstract class PalindromikesLexikou {
         System.out.println("palindrome percentage: " + palindromeCount * 100.0 / wordCount + "%");
     }
 
+    //prints the palindrome array elements in easy to read format.
     static void printPalindromes()
     {
         for (int i = 0; i < palindromes.length; i++)
@@ -147,6 +170,7 @@ abstract class PalindromikesLexikou {
         System.out.println();
     }
 
+    //merge sort that sorts a string array based on the element's string length.
     static void mergesort(String[] list, int listLength) {
         if (listLength < 2) return;
 
@@ -163,6 +187,7 @@ abstract class PalindromikesLexikou {
         mergesort(left, mid);
         mergesort(right, listLength - mid);
 
+        //merge function the merge the 2 halves.
         int i = 0, j = 0, k = 0;
         while (i < left.length && j < right.length) {
             if (left[i].length() > right[j].length()) {
@@ -185,7 +210,7 @@ abstract class PalindromikesLexikou {
             k++;
         }
     }
-
+    //calls mergesort so main() cleaner.
     static void sort(){
         mergesort(palindromes, palindromeCount);
     }
@@ -202,7 +227,7 @@ class PalindromikesMusic {
         char[] w = word.toCharArray();
 
         for (int i = 0; i < wordLength; i++){
-            String note = "[" + ((int)(w[i])-885) + "]i";
+            String note = "[" + ((int)(w[i])-885) + "]i"; //945 is 'α' in unicode.
             player.play(note);
         }
     }
