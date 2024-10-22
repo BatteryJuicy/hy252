@@ -28,7 +28,7 @@ public class Palindromikes {
                 long timeI = System.currentTimeMillis();
                 System.out.println("\n" + PalindromikesFraseis.isPalindromikiFrash(palindrome));
                 long timeF = System.currentTimeMillis();
-                System.out.println("a execution time in seconds: " +  (timeF - timeI)/1000.0);
+                System.out.println("execution time in seconds: " +  (timeF - timeI)/1000.0);
             }
         }
         catch (Exception e) {
