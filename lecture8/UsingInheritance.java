@@ -2,7 +2,7 @@ package lec8;
 
 public class UsingInheritance {
     Stack stack = new Stack();
-    stack.push([5]);
+    stack.push(5);
 }
 
 //delegation example;
